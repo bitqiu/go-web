@@ -2,8 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-web/cmd"
-	"net/http"
+	"go-web/bootstrap"
 )
 
 //go:generate swag init --parseDependency --parseDepth=6
@@ -21,12 +20,10 @@ func init() {
 }
 
 func main() {
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		c.AsciiJSON(http.StatusOK,gin.H{
-			"msg":"hello world!",
-		})
-	})
-	r.Run(":8000")
-	cmd.Execute()
+	// gin 实例
+	router := gin.New()
+	// 路由初始化
+	bootstrap.SetupRoute(router)
+	// 启动服务
+	router.Run(":3000")
 }
