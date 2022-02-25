@@ -1,0 +1,10 @@
+.idea
+.vscode
+*/.DS_Store
+temp/
+!temp
+vendor
+*/.DS_Store
+
+# go sum
+go.sum
