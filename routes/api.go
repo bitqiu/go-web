@@ -5,7 +5,7 @@ import (
 	controllers "go-web/app/http/controllers/api/v1"
 )
 
-func RegisterAPIRoutes(r *gin.Engine)  {
+func RegisterAPIRoutes(r *gin.Engine) {
 	v1 := r.Group("/api/v1")
 	{
 		apiCtrl := new(controllers.ApiController)

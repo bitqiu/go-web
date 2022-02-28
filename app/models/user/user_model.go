@@ -12,3 +12,15 @@ type User struct {
 	models.CommonTimestampsField
 	models.CommonSoftDeletesField
 }
+
+func (userModel *User) Create()  {
+
+}
+
+func (userModel *User) Update()  {
+
+}
+
+func (userModel *User) Delete()  {
+
+}
