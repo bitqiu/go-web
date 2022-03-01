@@ -1,8 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"go-web/app/models/article"
+	"go-web/app/models/tag"
+	"go-web/app/models/user"
 	"go-web/bootstrap"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 //go:generate swag init --parseDependency --parseDepth=6
@@ -17,6 +23,16 @@ import (
 
 func init() {
 	// TODO 全局初始化 例 配置读取
+	db, err := gorm.Open(sqlite.Open("blog.db"))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	db.AutoMigrate(
+		&user.User{},
+		&article.Article{},
+		&tag.Tag{},
+	)
 }
 
 func main() {

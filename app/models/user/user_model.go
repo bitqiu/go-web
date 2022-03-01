@@ -1,13 +1,14 @@
 package user
 
-import "go-web/app/models"
+import (
+	"go-web/app/models"
+)
 
 type User struct {
 	models.BaseModel
 
-	Name     string `json:"name" gorm:"not null;index"`
-	Password string `json:"password" gorm:"not null"`
-	Mobile   string `json:"mobile" gorm:"default:null"`
+	Name     string `json:"name" gorm:"type:varchar(255);not null;index;comment:用户名"`
+	Password string `json:"password" gorm:"type:varchar(255);not null;"`
 
 	models.CommonTimestampsField
 	models.CommonSoftDeletesField
