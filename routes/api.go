@@ -11,5 +11,14 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		apiCtrl := new(controllers.ApiController)
 
 		v1.GET("/index", apiCtrl.Index)
+
+		//获取标签列表
+		v1.GET("/tags", apiCtrl.GetTags)
+		//增加标签
+		v1.POST("/tags", apiCtrl.AddTag)
+		//编辑标签
+		v1.PUT("/tags:id", apiCtrl.EditTag)
+		//删除标签
+		v1.DELETE("/tags/:id", apiCtrl.DeleteTag)
 	}
 }
