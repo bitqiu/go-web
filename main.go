@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go-web/app/models/article"
-	"go-web/app/models/tag"
-	"go-web/app/models/user"
 	"go-web/bootstrap"
+	"go-web/global"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -21,18 +19,18 @@ import (
 // @in header
 // @name Authorization
 
+
 func init() {
-	// TODO 全局初始化 例 配置读取
-	db, err := gorm.Open(sqlite.Open("blog.db"))
+
+	sqliteDB := sqlite.Open("blog.db")
+
+	var err error
+	global.DB, err = gorm.Open(sqliteDB)
+
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	db.AutoMigrate(
-		&user.User{},
-		&article.Article{},
-		&tag.Tag{},
-	)
 }
 
 func main() {

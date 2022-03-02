@@ -1,9 +1,7 @@
 package models
 
 import (
-	"fmt"
 	"github.com/spf13/cast"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"time"
 )
@@ -27,14 +25,4 @@ type CommonSoftDeletesField struct {
 // GetStringID 获取 ID 的字符串格式
 func (a BaseModel) GetStringID() string {
 	return cast.ToString(a.ID)
-}
-
-var Db *gorm.DB
-
-func init() {
-	Db, err := gorm.Open(sqlite.Open("blog.db"))
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	Db.DB()
 }
