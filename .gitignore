@@ -80,3 +80,7 @@ __debug_bin
 ######################
 .sass-cache/*
 node_modules/
+
+# air 配置文件 #
+######################
+/.air.toml

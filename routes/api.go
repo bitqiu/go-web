@@ -19,6 +19,6 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		//编辑标签
 		v1.PUT("/tags", apiCtrl.EditTag)
 		//删除标签
-		v1.DELETE("/tags/:id", apiCtrl.DeleteTag)
+		v1.DELETE("/tags", apiCtrl.DeleteTag)
 	}
 }

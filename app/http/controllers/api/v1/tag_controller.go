@@ -10,8 +10,11 @@ import (
 // GetTags 获取标签
 func (ctl *ApiController) GetTags(c *gin.Context) {
 	pageNum := cast.ToInt(c.DefaultQuery("page_num", "1"))
-	pageSize := cast.ToInt(c.DefaultQuery("page_size", "1"))
-	data, _, total := tag.Paginate(pageNum, pageSize)
+	pageSize := cast.ToInt(c.DefaultQuery("page_size", "10"))
+
+	where := map[string]string{}
+	data := tag.GetTags(pageNum, pageSize, where)
+	total := tag.GetTagsTotal(where)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  http.StatusOK,
@@ -61,5 +64,18 @@ func (ctl *ApiController) EditTag(c *gin.Context) {
 
 // DeleteTag 删除标签
 func (ctl *ApiController) DeleteTag(c *gin.Context) {
+	id := c.PostForm("id")
+	result := tag.DeleteTag(id)
 
+	code := http.StatusOK
+	message := "success"
+	if !result {
+		code = http.StatusBadRequest
+		message = "failed"
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"message": message,
+	})
 }
