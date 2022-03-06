@@ -70,6 +70,12 @@ func GetTagsTotal(where interface{}) (count int64) {
 	return
 }
 
+func ExitTagByName(name string) bool {
+	var tag Tag
+	global.DB.Select("id").Where("name = ?", name).First(&tag)
+	return tag.ID > 0
+}
+
 // AddTag 增加标签
 func AddTag(name, userID string) bool {
 	result := global.DB.Create(&Tag{Name: name, UserID: userID})

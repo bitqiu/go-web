@@ -28,6 +28,15 @@ func (ctl *ApiController) GetTags(c *gin.Context) {
 func (ctl *ApiController) AddTag(c *gin.Context) {
 	name := c.PostForm("name")
 	userId := c.DefaultPostForm("user_id", "1")
+
+	if tag.ExitTagByName(name) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"message": "标签名已存在！",
+		})
+		return
+	}
+
 	result := tag.AddTag(name, userId)
 
 	code := http.StatusOK
