@@ -57,39 +57,40 @@ func Paginate(page, pageSize int) (tags []Tag, currentPage int, total int64) {
 	return
 }
 
-// GetTags 获取标签列表
-func GetTags(pageNum, pageSize int, where interface{}) (tags []Tag) {
+// Get 获取标签列表
+func Get(pageNum, pageSize int, where interface{}) (tags []Tag) {
 	pageNum = (pageNum - 1) * pageSize
 	global.DB.Where(where).Offset(pageNum).Limit(pageSize).Find(&tags)
 	return
 }
 
-// GetTagsTotal 获取标签数量
-func GetTagsTotal(where interface{}) (count int64) {
+// GetTotal 获取标签数量
+func GetTotal(where interface{}) (count int64) {
 	global.DB.Model(&Tag{}).Where(where).Count(&count)
 	return
 }
 
-func ExitTagByName(name string) bool {
+// ExitByName 便签名是否存在
+func ExitByName(name string) bool {
 	var tag Tag
 	global.DB.Select("id").Where("name = ?", name).First(&tag)
 	return tag.ID > 0
 }
 
-// AddTag 增加标签
-func AddTag(name, userID string) bool {
+// Create 增加标签
+func Create(name, userID string) bool {
 	result := global.DB.Create(&Tag{Name: name, UserID: userID})
 	return result.RowsAffected > 0
 }
 
-// EditTAg 修改标签
-func EditTAg(name, id string) bool {
+// Edit 修改标签
+func Edit(name, id string) bool {
 	result := global.DB.Model(&Tag{}).Where("id = ?", id).Update("name", name)
 	return result.RowsAffected > 0
 }
 
-// DeleteTag 删除标签
-func DeleteTag(id string) bool {
+// Delete 删除标签
+func Delete(id string) bool {
 	result := global.DB.Delete(&Tag{}, id)
 	return result.RowsAffected > 0
 }

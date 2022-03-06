@@ -15,10 +15,15 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		//获取标签列表
 		v1.GET("/tags", apiCtrl.GetTags)
 		//增加标签
-		v1.POST("/tags", apiCtrl.AddTag)
+		v1.POST("/tags", apiCtrl.CreateTag)
 		//编辑标签
 		v1.PUT("/tags", apiCtrl.EditTag)
 		//删除标签
 		v1.DELETE("/tags", apiCtrl.DeleteTag)
+
+		//用户注册
+		v1.POST("/register", apiCtrl.Register)
+		//用户登录
+		v1.POST("/login", apiCtrl.Login)
 	}
 }

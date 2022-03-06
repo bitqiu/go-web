@@ -13,8 +13,8 @@ func (ctl *ApiController) GetTags(c *gin.Context) {
 	pageSize := cast.ToInt(c.DefaultQuery("page_size", "10"))
 
 	where := map[string]string{}
-	data := tag.GetTags(pageNum, pageSize, where)
-	total := tag.GetTagsTotal(where)
+	data := tag.Get(pageNum, pageSize, where)
+	total := tag.GetTotal(where)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  http.StatusOK,
@@ -24,12 +24,12 @@ func (ctl *ApiController) GetTags(c *gin.Context) {
 	})
 }
 
-// AddTag 增加标签
-func (ctl *ApiController) AddTag(c *gin.Context) {
+// CreateTag 增加标签
+func (ctl *ApiController) CreateTag(c *gin.Context) {
 	name := c.PostForm("name")
 	userId := c.DefaultPostForm("user_id", "1")
 
-	if tag.ExitTagByName(name) {
+	if tag.ExitByName(name) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "标签名已存在！",
@@ -37,7 +37,7 @@ func (ctl *ApiController) AddTag(c *gin.Context) {
 		return
 	}
 
-	result := tag.AddTag(name, userId)
+	result := tag.Create(name, userId)
 
 	code := http.StatusOK
 	message := "success"
@@ -56,7 +56,7 @@ func (ctl *ApiController) AddTag(c *gin.Context) {
 func (ctl *ApiController) EditTag(c *gin.Context) {
 	name := c.PostForm("name")
 	id := c.PostForm("id")
-	result := tag.EditTAg(name, id)
+	result := tag.Edit(name, id)
 
 	code := http.StatusOK
 	message := "success"
@@ -74,7 +74,7 @@ func (ctl *ApiController) EditTag(c *gin.Context) {
 // DeleteTag 删除标签
 func (ctl *ApiController) DeleteTag(c *gin.Context) {
 	id := c.PostForm("id")
-	result := tag.DeleteTag(id)
+	result := tag.Delete(id)
 
 	code := http.StatusOK
 	message := "success"
