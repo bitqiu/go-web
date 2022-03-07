@@ -34,3 +34,8 @@ func (userModel *User) ExitByLoginName() bool {
 	global.DB.Select("id").Where("login_name = ?", userModel.LoginName).First(&userModel)
 	return userModel.ID > 0
 }
+
+func (userModel *User) GetByLoginNameAndPassword() (UserModel *User) {
+	global.DB.Select("id,name").Where("login_name = ? and password = ?", userModel.LoginName, userModel.Password).Find(&userModel)
+	return
+}

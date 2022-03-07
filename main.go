@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"go-web/bootstrap"
 	"go-web/global"
+	"go-web/pkg/config"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -19,7 +21,6 @@ import (
 // @in header
 // @name Authorization
 
-
 func init() {
 
 	sqliteDB := sqlite.Open("blog.db")
@@ -31,6 +32,14 @@ func init() {
 		fmt.Println(err.Error())
 	}
 
+	config.Viper = viper.New()
+	config.Viper.SetConfigName("config")
+	config.Viper.SetConfigType("toml")
+	config.Viper.AddConfigPath("./config")
+	err = config.Viper.ReadInConfig()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }
 
 func main() {

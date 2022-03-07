@@ -2,6 +2,7 @@
 package helpers
 
 import (
+	"crypto/md5"
 	"crypto/rand"
 	"fmt"
 	"io"
@@ -72,4 +73,11 @@ func RandomString(length int) string {
 		b[i] = letters[mathrand.Intn(len(letters))]
 	}
 	return string(b)
+}
+
+// Md5 md5
+func Md5(str string) string{
+	h := md5.New()
+	io.WriteString(h, str)
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
