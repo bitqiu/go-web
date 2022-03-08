@@ -29,3 +29,13 @@ func SignedJWT(UserId uint64) (string, error) {
 	jwtKey := cast.ToString(config.Viper.Get("jwt.jwt_key"))
 	return token.SignedString([]byte(jwtKey))
 }
+
+// ParseToken 解析 token
+func ParseToken(token string) (*jwt.Token, *Claims, error) {
+	Claims := &Claims{}
+	jwtToken, err := jwt.ParseWithClaims(token, Claims, func(token *jwt.Token) (i interface{}, err error) {
+		jwtKey := cast.ToString(config.Viper.Get("jwt.jwt_key"))
+		return []byte(jwtKey), nil
+	})
+	return jwtToken, Claims, err
+}

@@ -45,14 +45,14 @@ func Paginate(page, pageSize int) (tags []Tag, currentPage int, total int64) {
 
 	offset := (page - 1) * pageSize
 
-	global.DB.Debug().Preload(clause.Associations).
+	global.DB.Preload(clause.Associations).
 		Limit(pageSize). // 每页显示
 		Offset(offset).
 		Find(&tags)
 
 	currentPage = page
 
-	global.DB.Debug().Count(&total)
+	global.DB.Count(&total)
 
 	return
 }

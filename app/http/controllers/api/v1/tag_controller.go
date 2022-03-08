@@ -11,8 +11,10 @@ import (
 func (ctl *ApiController) GetTags(c *gin.Context) {
 	pageNum := cast.ToInt(c.DefaultQuery("page_num", "1"))
 	pageSize := cast.ToInt(c.DefaultQuery("page_size", "10"))
+	userId, _ := c.Get("UserId")
 
-	where := map[string]string{}
+	where := map[string]string{"user_id": cast.ToString(userId)}
+
 	data := tag.Get(pageNum, pageSize, where)
 	total := tag.GetTotal(where)
 
