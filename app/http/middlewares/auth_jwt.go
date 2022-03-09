@@ -23,6 +23,7 @@ func AuthJWT() gin.HandlerFunc {
 			return
 		}
 
+		//解析token
 		token, claims, err := helpers.ParseToken(tokenString)
 		if err != nil || !token.Valid {
 			c.JSON(http.StatusUnauthorized, gin.H{

@@ -23,6 +23,15 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		//删除标签
 		v1.DELETE("/tags", apiCtrl.DeleteTag)
 
+		//获取文章列表
+		v1.GET("/articles", apiCtrl.GetArticles)
+		//增加文章
+		v1.POST("/articles", apiCtrl.CreateArticle)
+		//编辑文章
+		v1.PUT("/articles", apiCtrl.EditArticle)
+		//删除文章
+		v1.DELETE("/articles", apiCtrl.DeleteArticle)
+
 	}
 
 	v2 := r.Group("/api/v1")

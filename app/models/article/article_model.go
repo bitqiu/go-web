@@ -4,6 +4,7 @@ import (
 	"go-web/app/models"
 	"go-web/app/models/tag"
 	"go-web/app/models/user"
+	"go-web/global"
 )
 
 type Article struct {
@@ -23,4 +24,35 @@ type Article struct {
 
 	models.CommonTimestampsField
 	models.CommonSoftDeletesField
+}
+
+// Create 创建文章
+func (ArticleModel *Article) Create() bool {
+	result := global.DB.Create(ArticleModel)
+	return result.RowsAffected > 0
+}
+
+// Get 获取文章列表
+func (ArticleModel *Article) Get(pageNum, pageSize int, where interface{}) (article []Article) {
+	pageNum = (pageNum - 1) * pageSize
+	global.DB.Where(where).Offset(pageNum).Order("id desc").Limit(pageSize).Find(&article)
+	return
+}
+
+// GetTotal 获取文章数量
+func (ArticleModel *Article) GetTotal(where interface{}) (count int64) {
+	global.DB.Model(ArticleModel).Where(where).Count(&count)
+	return
+}
+
+// Edit 编辑文章
+func (ArticleModel *Article) Edit(where interface{}) bool {
+	result := global.DB.Where(where).Updates(ArticleModel)
+	return result.RowsAffected > 0
+}
+
+// Delete 删除文章
+func (ArticleModel *Article) Delete(where interface{}) bool {
+	result := global.DB.Where(where).Delete(ArticleModel)
+	return result.RowsAffected > 0
 }

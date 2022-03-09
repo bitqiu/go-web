@@ -71,9 +71,9 @@ func GetTotal(where interface{}) (count int64) {
 }
 
 // ExitByName 便签名是否存在
-func ExitByName(name string) bool {
+func ExitByName(name, userId string) bool {
 	var tag Tag
-	global.DB.Select("id").Where("name = ?", name).First(&tag)
+	global.DB.Select("id").Where("name = ? and user_id = ?", name, userId).First(&tag)
 	return tag.ID > 0
 }
 
@@ -84,13 +84,13 @@ func Create(name, userID string) bool {
 }
 
 // Edit 修改标签
-func Edit(name, id string) bool {
-	result := global.DB.Model(&Tag{}).Where("id = ?", id).Update("name", name)
+func Edit(name, id, userId string) bool {
+	result := global.DB.Model(&Tag{}).Where("id = ? and user_id = ?", id, userId).Update("name", name)
 	return result.RowsAffected > 0
 }
 
 // Delete 删除标签
-func Delete(id string) bool {
-	result := global.DB.Delete(&Tag{}, id)
+func Delete(id, userId string) bool {
+	result := global.DB.Where("id = ? and user_id = ?", id, userId).Delete(&Tag{})
 	return result.RowsAffected > 0
 }

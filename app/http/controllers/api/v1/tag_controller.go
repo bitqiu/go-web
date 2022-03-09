@@ -19,7 +19,7 @@ func (ctl *ApiController) GetTags(c *gin.Context) {
 	total := tag.GetTotal(where)
 
 	c.JSON(http.StatusOK, gin.H{
-		"status":  http.StatusOK,
+		"code":    http.StatusOK,
 		"message": "success",
 		"data":    data,
 		"total":   total,
@@ -29,9 +29,10 @@ func (ctl *ApiController) GetTags(c *gin.Context) {
 // CreateTag 增加标签
 func (ctl *ApiController) CreateTag(c *gin.Context) {
 	name := c.PostForm("name")
-	userId := c.DefaultPostForm("user_id", "1")
+	userId0, _ := c.Get("UserId")
+	userId := cast.ToString(userId0)
 
-	if tag.ExitByName(name) {
+	if tag.ExitByName(name, userId) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    http.StatusBadRequest,
 			"message": "标签名已存在！",
@@ -49,7 +50,7 @@ func (ctl *ApiController) CreateTag(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status":  code,
+		"code":    code,
 		"message": message,
 	})
 }
@@ -58,7 +59,10 @@ func (ctl *ApiController) CreateTag(c *gin.Context) {
 func (ctl *ApiController) EditTag(c *gin.Context) {
 	name := c.PostForm("name")
 	id := c.PostForm("id")
-	result := tag.Edit(name, id)
+	userId0, _ := c.Get("UserId")
+	userId := cast.ToString(userId0)
+
+	result := tag.Edit(name, id, userId)
 
 	code := http.StatusOK
 	message := "success"
@@ -76,7 +80,10 @@ func (ctl *ApiController) EditTag(c *gin.Context) {
 // DeleteTag 删除标签
 func (ctl *ApiController) DeleteTag(c *gin.Context) {
 	id := c.PostForm("id")
-	result := tag.Delete(id)
+	userId0, _ := c.Get("UserId")
+	userId := cast.ToString(userId0)
+
+	result := tag.Delete(id, userId)
 
 	code := http.StatusOK
 	message := "success"
@@ -86,7 +93,7 @@ func (ctl *ApiController) DeleteTag(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"status":  code,
+		"code":    code,
 		"message": message,
 	})
 }
