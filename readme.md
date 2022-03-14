@@ -3,16 +3,16 @@
 个人学习项目
 
 ## TODO
-- [ ] JWT 集成
+- [x] JWT 集成
 - [ ] gorm 集成
 - [ ] 命令行参数
 - [ ] 缓存模块
 - [ ] 日志处理
 - [ ] 图片验证码
 - [ ] USER模块
-- [ ] TAGS模块
+- [x] TAGS模块
 - [ ] POSTS模块
-- [ ] ARCHIVES模块
+- [x] ARCHIVES模块
 
 
 ## 第三方依赖
@@ -25,6 +25,7 @@
 - [redis](https://github.com/go-redis/redis/v8) —— Redis 操作
 - [jwt](https://github.com/golang-jwt/jwt) —— JWT 操作
 - [ansi](https://github.com/mgutz/ansi) —— 终端高亮输出
+- [validator](https://github.com/go-playground/validator) —— 参数验证
 
 ## 自定义的包
 
